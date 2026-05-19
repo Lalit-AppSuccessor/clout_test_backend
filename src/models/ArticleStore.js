@@ -53,6 +53,13 @@ const ArticleSchema = new mongoose.Schema(
         default: 0,
       },
     },
+
+    reactions: {
+      like: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     timestamps: true,

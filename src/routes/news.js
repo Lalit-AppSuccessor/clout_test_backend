@@ -99,4 +99,35 @@ router.post("/:id/stance", async (req, res) => {
   }
 });
 
+router.post("/:id/like-toggle", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Article ID are required",
+      });
+    }
+
+    const article = await Article.findOneAndUpdate(
+      { _id: id },
+      { $inc: { "reactions.like": 1 } },
+      { returnDocument: "after" },
+    );
+    console.log(article, id);
+
+    res.json({
+      success: true,
+      article,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+    });
+  }
+});
+
 export default router;
