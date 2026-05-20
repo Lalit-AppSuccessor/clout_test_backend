@@ -81,14 +81,9 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
 
-    refreshToken: {
-      type: String,
-      default: "",
-      select: false,
-    },
-
     lastLogin: {
       type: Date,
+      default: Date.now,
     },
   },
   {

@@ -1,20 +1,25 @@
 import express from "express";
 
 import {
-  createUser,
+  createOrLoginUser,
   deleteUser,
   getUserById,
+  refreshToken,
   updateUser,
 } from "../controllers/userprofileControls.js";
 
+import { authMiddleware } from "../middleware/authVerify.js";
+
 const router = express.Router();
 
-router.post("/", createUser);
+router.post("/", createOrLoginUser);
 
-router.get("/:id", getUserById);
+router.get("/", authMiddleware, getUserById);
 
-router.patch("/:id", updateUser);
+router.patch("/", authMiddleware, updateUser);
 
-router.delete("/:id", deleteUser);
+router.delete("/", authMiddleware, deleteUser);
+
+router.post("/refresh", refreshToken);
 
 export default router;
