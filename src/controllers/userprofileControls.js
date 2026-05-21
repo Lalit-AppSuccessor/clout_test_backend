@@ -109,6 +109,21 @@ export const updateUser = async (req, res) => {
     const firebase_uid = req.auth_firebase_uid || "";
     const updates = { ...req.body };
 
+    if (updates.username) {
+      const username = updates.username;
+
+      const available = await isUsernameAvailable(username);
+
+      if (!available) {
+        return res.status(400).json({
+          success: false,
+          message: "Username taken",
+        });
+      }
+
+      updates.username = username.trim().toLowerCase();
+    }
+
     // prevent firebaseUid update
     if (updates.firebaseUid) {
       delete updates.firebaseUid;

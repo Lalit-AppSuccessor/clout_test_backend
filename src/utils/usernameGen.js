@@ -21,3 +21,17 @@ export const generateUniqueUsername = async (email) => {
 
   return username;
 };
+
+export const isUsernameAvailable = async (username) => {
+  const cleanUsername = username?.trim()?.toLowerCase();
+
+  if (!cleanUsername) {
+    return false;
+  }
+
+  const exists = await User.exists({
+    username: cleanUsername,
+  });
+
+  return !exists;
+};
